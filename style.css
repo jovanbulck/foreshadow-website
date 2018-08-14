@@ -1,0 +1,81 @@
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+p{
+   font-size: 1.5em;
+   line-height: 1.55;
+}
+
+h3{
+   font-size: 1.9em;
+}
+
+.table{
+  font-size: 1.4em;
+}
+
+li{
+  font-size: 1.5em;
+}
+
+.fs-em{
+    color:#af2b03;
+    font-variant: small-caps;
+}
+
+.fs-title{
+    color:#af2b03;
+    font-weight: bold;
+}
+
+.fs-intro{
+    color:#787878;
+    font-weight: bold;
+}
+
+.fs-faq{
+    font-weight: bold;
+}
+
+.fs-btn{
+    font-size:20px;
+}
+
+pre {
+    text-align: left;
+    white-space: pre-line;
+}
+
+.footer {
+  background-color: #eee;
+  padding: 15px;
+}
+
+.question {
+    padding-top: 18px;
+    font-size: 1.6em;
+	font-weight: bold;
+}
+
+.answer {
+	text-indent: 18px;
+}
+
+.answer-chevron {
+    color:#af2b03;
+}
+
+.institute-link {
+    color:gray;
+}
+
+.double_col {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 1em;
+}
+
+.mid-btn {
+	background-color:#af2b03;
+	color:#f0f0f0;
+}

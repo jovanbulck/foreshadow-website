@@ -1,1 +1,373 @@
-hello, world!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Foreshadow: Extracting the Keys to the Intel SGX Kingdom with Transient Out-of-Order Execution</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+    <img class="img-responsive" width=220px style="display:inline" src="foreshadow.svg" />
+    <h1><span class="fs-em">Foreshadow</span></h1>
+    <h3>Extracting the Keys to the Intel SGX Kingdom with Transient Out-of-Order Execution</h3> 
+
+    <br/>
+    <p><a href="foreshadow.pdf" class="btn btn-default fs-btn" role="button">
+            Read the paper <i class="fa fa-download" aria-hidden="true"></i></a>
+
+       <a href="#bibtex" class="btn btn-default fs-btn" data-toggle="collapse" role="button">
+            Cite <i class="fa fa-quote-right" aria-hidden="true"></i></a>
+
+       <a href="#demo" class="btn btn-default fs-btn" role="button">
+            Watch a demo <i class="fa fa-video-camera" aria-hidden="true"></i></a>
+    </p>
+
+    <div id="bibtex" class="container collapse">
+<pre style="white-space: pre">
+@inproceedings{vanbulck2018foreshadow,
+    author = {Van Bulck, Jo and Minkin, Marina and Weisse, Ofir and Genkin, Daniel and Kasikci, Baris and
+              Piessens, Frank and Silberstein, Mark and Wenisch, Thomas F. and Yarom, Yuval and Strackx, Raoul},
+    title = {Foreshadow: Extracting the Keys to the {Intel SGX} Kingdom with Transient Out-of-Order Execution},
+    booktitle = {Proceedings of the 27th {USENIX} Security Symposium},
+    year = {2018},
+    month = {August},
+    publisher = {{USENIX} Association}
+}
+</pre>
+    </div> 
+</div>
+  
+<div class="container">
+
+    <div class="page-header">
+        <h2 class="fs-title">Introduction</h2>
+    </div>
+
+    <p>
+    Foreshadow is an attack on Intel <abbr title="Software Guard eXtensions">SGX</abbr>
+    technology which allows an attacker to
+    steal sensitive information stored inside personal computers or third party
+    clouds. At a high level, <a href="https://en.wikipedia.org/wiki/Software_Guard_Extensions">SGX</a>
+    is a new  feature in modern Intel CPUs which
+    allows computers to protect users’ data even if the entire system falls under
+    the attacker’s control. While it was previously believed that SGX is resilient
+    to speculative execution attacks (such as <a href="https://meltdownattack.com/">Meltdown</a> and <a href="https://spectreattack.com/">Spectre</a>), Foreshadow
+    demonstrates how speculative execution can be exploited for reading the
+    contents of SGX-protected memory. Making things worse, due to SGX’s design, it
+    only takes a single compromised SGX machine in order to erode trust in the
+    entire SGX ecosystem. 
+    </p>
+
+    <p>
+    More technically, we first show how can read the entire memory contents of any
+    victim enclave running on the target machine. Next, we demonstrate how to
+    leverage this ability to violate the integrity and confidentiality of SGX’s
+    sealing mechanism, which protects enclaves’ long term
+    storage. Finally, we show how to recover the machine’s attestation key and
+    breach the SGX trust mechanism, allowing attackers to masquerade as any victim
+    enclave. Crucially, unlike previous side-channel attacks on SGX which rely on
+    existing side-channel vulnerabilities in the victim’s code, our attack exploits
+    flaws in the CPU microarchitectural design. Consequently, our attack can read a
+    victim enclave’s entire address space even if the code running in it is free of
+    security vulnerabilities.
+    </p>
+
+    <div id="demo" class="page-header">
+        <h2 class="fs-title">Foreshadow in Action</h2>
+    </div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/ynB1inl4G3c?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/8ZF6kX6z7pM?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+
+    <div class="page-header">
+        <h2 class="fs-title">Questions and Answers</h2>
+    </div>
+
+	<p class = "question">Who reported this vulnerability?</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+        Foreshadow was independently and concurrently discovered by two teams:
+    <ul>
+        <li>
+        <a href="https://distrinet.cs.kuleuven.be/people/jo">Jo Van Bulck</a>,
+        <a href="https://distrinet.cs.kuleuven.be/people/frank">Frank Piessens</a>,
+        <a href="https://distrinet.cs.kuleuven.be/people/raoul">Raoul Strackx</a>
+        (<a href="https://distrinet.cs.kuleuven.be/" class="institute-link">imec-DistriNet, KU Leuven</a>).
+        </li>
+
+        <li>
+        <a href="https://themarina.github.io/">Marina Minkin</a>,
+        <a href="https://sites.google.com/site/silbersteinmark/">Mark Silberstein</a>
+        (<a href="https://www.technion.ac.il/en" class="institute-link">Technion</a>),
+        <a href="http://www.ofirweisse.com/">Ofir Weisse</a>,
+        <a href="http://web.eecs.umich.edu/~genkin/">Daniel Genkin</a>,
+        <a href="https://web.eecs.umich.edu/~barisk/">Baris Kasikci</a>,
+        <a href="https://web.eecs.umich.edu/~twenisch/">Thomas F. Wenisch</a>
+        (<a href="https://www.umich.edu/" class="institute-link">University of Michigan</a>),
+	    <a href="https://www.adelaide.edu.au/directory/yuval.yarom">Yuval Yarom</a>
+        (<a href="https://www.adelaide.edu.au/" class="institute-link">University of Adelaide</a> and
+        <a href="https://data61.csiro.au" class="institute-link">CSIRO's Data61</a>).
+        </li>
+    </ul>
+
+    <p>
+        The KU Leuven authors discovered the vulnerability, independently
+        developed the attack, and first notified Intel on January 3, 2018.
+        Their work was done independently from and concurrently to other recent
+        x86 speculative execution vulnerabilities, notably Meltdown and
+        Spectre.
+        The authors from Technion, University of Michigan, the
+        University of Adelaide and CSIRO's Data61 independently discovered and reported the
+        vulnerability and associated attack to Intel during the embargo period on
+        January 23, 2018.
+    <ul>
+	<li> 
+	Following our discovery of Foreshadow (CVE-2018-3615), Intel identified two additional vulnerabilities, which we call Foreshadow-NG (Next Generation, CVE-2018-3620 and CVE-2018-3646), potentially affecting additional microprocessors, SMM code, Operating system and Hypervisor software.  Intel refers to this class of speculative execution side channel vulnerabilities collectively as “L1 Terminal Fault (L1TF)” More information on L1TF can be found <a href="https://software.intel.com/security-software-guidance/software-guidance/l1-terminal-fault">here</a>.
+	</li>
+	</ul>
+	</p>
+
+
+	<p class = "question">
+    Where can I find more information about Foreshadow? 
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+    For more information about how the attack works see our <a href="foreshadow.pdf">academic paper</a>.
+	<a href="https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00161.html">Intel's security advisory</a> and <a href="https://software.intel.com/security-software-guidance/software-guidance/l1-terminal-fault">whitepaper</a>, describing Foreshadow as 'L1 Terminal Fault', are also available. The Foreshadow / L1-terminal-fault attack were assigned the following CVE numbers: 
+	<li> CVE-2018-3615 for attacking SGX. </li>
+	<li> CVE-2018-3620 for attacking the OS Kernel and SMM mode.</li>
+	<li> CVE-2018-3646 for attacking virtual machines. </li>
+	</p>
+
+    <p class = "question">
+	What is Intel SGX?
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+    Intel Software Guard eXtensions (SGX) is a Trusted Execution Environment
+    (TEE) enabling secure program execution in untrusted environments. The program
+    and the data it operates on are protected from modification or inspection even
+    in the presence of a highly-privileged adversary corrupting the operating
+    system, hypervisor, or firmware (BIOS).
+	</p>
+
+	<p class = "question">
+	What CPUs are affected by Foreshadow?
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+    Intel confirmed that Foreshadow affects all SGX-enabled Core processors
+    (Skylake and Kaby Lake), while some Atom family processors with SGX support
+    allegedly remain unaffected.
+	</p>
+
+    <p class = "question">
+	Was the confidentiality of SGX enclaves affected?
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+    Yes. Foreshadow allows reading the entire (protected) memory address space
+    that belongs to any SGX enclave. This includes architectural enclaves provided
+    by Intel such as the Quoting and Launch Enclaves. 
+	</p>
+	
+	<p class = "question">
+	Was the remote attestation mechanism affected?
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+    Yes. Foreshadow allows extracting the attestation keys, used by the Intel
+    Quoting Enclave to vouch for the authenticity of enclaves. As a result, an
+    attacker using Foreshadow can generate "valid" attestation quotes and
+    masquerade as any enclave. The counterfeit quote "proves" that the attacker
+    enclave is a genuine enclave running under SGX protection while, in fact, it
+    runs attacker controlled code. 
+	</p>
+	
+	<p class = "question">
+	Is SGX long-term storage affected?
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+    Yes. Foreshadow enables an attacker to extract SGX sealing keys, thereby
+    reading any data protected by the sealing mechanism and then modify (re-seal)
+    it. The re-sealed data has the "correct" Message Authentication Code (MAC)
+    since the attacker extracted the sealing key. 
+	</p>
+
+	<p class = "question">
+    Can I detect if someone has exploited Foreshadow to read my data?
+    </p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+    Not likely. The Foreshadow attack does not leave traces in typical log files.
+    While installing a new (malicious) driver may leave traces in the system log,
+    the attacker can probably alter the log buffer, since she has root privileges. 
+    </p>
+	
+    <p class = "question">
+    What about other processors (AMD/ARM)?
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+    Foreshadow affects most SGX-enabled Intel processors. As SGX is currently
+    present only in Intel CPUs, we are unaware of Foreshadow affecting other CPU
+    vendors. 
+	</p>
+	
+    <p class = "question">
+    Did you release the source code of your exploits?
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+    As to allow for additional time for system updates we will not release a
+    proof-of-concept at this time. Proof-of-concept code might be released at a
+    later time.
+	</p>
+
+	<p class = "question">
+	What are the conditions required to mount the Foreshadow attack?
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+    Foreshadow can extract some data using even user-level permissions without
+    additional capabilities. However, Foreshadow becomes much more effective in the
+    case of a root-level adversary, against which SGX is also designed to protect. 
+	</p>
+	
+	<p class = "question">
+	Are there mitigations against Foreshadow?
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+    Foreshadow cannot be mitigated by patching the enclave code or the SDK. A
+    micro-code patch mitigating Foreshadow is available <a href="https://software.intel.com/security-software-guidance/software-guidance/l1-terminal-fault">here</a>.
+	</p>
+
+	<p class = "question">
+	Do Spectre and Meltdown mitigations such as Retpoline,
+        <abbr title="Kernel Page Table Isolation">KPTI</abbr>,
+        <abbr title="Indirect Branch Restricted Speculation">IBRS</abbr>,
+        <abbr title="Single Thread Indirect Branch Predictors">STIBP</abbr>, or
+        <abbr title="Indirect Branch Predictor Barrier">IBPB</abbr>
+        mitigate Foreshadow?
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+    No. The mitigations against Meltdown are only designed to protect the
+    operating system (and not SGX) while the Spectre mitigations only protect code
+    during its execution. 
+    Foreshadow is not mitigated by these countermeasures as it targets SGX and
+    does not require the code of the victim enclave to execute. 
+	</p>
+	
+    <p class = "question">
+	How is Foreshadow different than prior Spectre-like attacks on SGX? 
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+	Concurrent speculative execution attacks, e.g., <a href="https://arxiv.org/abs/1802.09085">SGXPectre</a>,
+    rely on the code of the affected enclave to contain gadgets vulnerable to
+    Spectre. Thus, such attacks can be theoretically mitigated 
+    by removing these gadgets from the affected enclave. In contrast, Foreshadow
+    extracts enclave memory without relying on <em>any</em> code vulnerability in
+    the victim enclave or even without requiring the affected enclave to execute.
+    As such, Foreshadow can be used even in the case where the code of the affected
+    enclave is "perfect", i.e., does not contain any side-channel vulnerability. 
+	</p>
+	
+    <p class = "question">
+	Does <abbr title="Address Space Layout Randomization">ASLR</abbr> or encrypting my enclave's code defend against Foreshadow?
+	</p>
+    <p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+    No. Foreshadow is capable of dumping the entire enclave's memory at any
+    stage of the enclave life-cycle. Therefore, the enclave's code can be extracted
+    after the randomization phase of ASLR or during the code’s execution (which
+    happens after its decryption).
+	</p>
+	
+	<p class = "question">
+	Why is it called Foreshadow?
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+
+    In literature, <a href="https://en.wikipedia.org/wiki/Foreshadowing">"foreshadowing"</a>
+    is used to indicate a trick where a writer provides a subtle hint of
+    what is to come later in the story. Analogous to how a good story teller
+    tries to keep the outcome of the story (mostly) secret, the speculative
+    execution mechanisms found in modern processors, do not <em>directly</em>
+    leak secrets. In the storytelling analogy,
+    the Foreshadow attack shows, however, that
+    clever adversaries can abuse subtle hints in the present to reconstruct
+    secrets from the future.
+	</p>
+	
+	<p class = "question">
+	Can I use the logo?
+	</p>
+	<p class = "answer">
+    <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
+	
+	The logo is free to use, rights waived via <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.
+    Logos are designed by <a href="https://vividfox.me/">Natascha Eibl</a>.
+	</p>
+
+    <table class="table">
+       <thead>
+         <tr>
+           <th>Logo</th>
+           <th>Logo with narrow text</th>
+           <th>Logo with wide text</th>
+         </tr>
+       </thead>
+       <tbody>
+         <tr>
+           <td><a href="foreshadow.png"><i class="fa fa-download" aria-hidden="true"></i> PNG</a> /
+               <a href="foreshadow.svg"><i class="fa fa-download" aria-hidden="true"></i> SVG</a></td>
+
+           <td><a href="foreshadow-text-small.png"><i class="fa fa-download" aria-hidden="true"></i> PNG</a> /
+               <a href="foreshadow-text-small.svg"><i class="fa fa-download" aria-hidden="true"></i> SVG</a></td>
+
+           <td><a href="foreshadow-text-wide.png"><i class="fa fa-download" aria-hidden="true"></i> PNG</a> /
+               <a href="foreshadow-text-wide.svg"><i class="fa fa-download" aria-hidden="true"></i> SVG</a></td>
+         </tr>
+        <tr><td/><td/><td/></tr>
+       </tbody>
+     </table>
+	
+   <div class="page-header">
+       <h2 class="fs-title">Acknowledgements</h2>
+   </div>
+
+   <p>
+    This research was partially supported by the
+    Research Fund KU Leuven, the Technion Hiroshi
+    Fujiwara cyber security research center, the Israel cyber bureau, by
+    NSF awards #1514261 and #1652259, the financial assistance award
+    70NANB15H328 from the U.S. Department of Commerce, National
+    Institute of Standards and Technology, the 2017-2018 Rothschild
+    Postdoctoral Fellowship, and the Defense Advanced Research
+    Project Agency (DARPA) under Contract #FA8650-16-C-7622.
+    Jo Van Bulck and Raoul Strackx are supported by
+    a grant of the Research Foundation - Flanders (FWO).
+   </p>
+
+  <br/>
+
+</div>
+
+<!-- <div class="container-fluid text-center footer"> -->
+<!--     <p>&#169; 2018 <a href="https://distrinet.cs.kuleuven.be/">imec-DistriNet</a>, Dept. of Computer Science, KU Leuven. All Rights Reserved.</p> -->
+<!-- </div> -->
+
+</body>
+</html>
+
