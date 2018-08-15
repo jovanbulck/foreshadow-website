@@ -8,7 +8,7 @@ Out-of-Order Execution</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="style.css">
-  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+<link rel="shortcut icon" type="image/png" href="favicon.png"/>
 </head>
 <body>
 
@@ -71,51 +71,49 @@ Out-of-Order Execution</h3>
 	Virtual Machines (VMs), hypervisors (VMM), operating system (OS) kernel memory, and System Management Mode (SMM) memory.
 </p>
 
-  <div id="paper" class = "double_col">
+<div id="paper" class = "double_col">
 	<div class="well">
-            <div class="page-header">
-                <h3 class="fs-title">Foreshadow</h2>
-            </div>
-  <!-- We're simply omitting SGXPectre here... -->
-            <p>
-                At a high level, <a href="https://en.wikipedia.org/wiki/Software_Guard_Extensions">SGX</a>
-    is a new  feature in modern Intel CPUs which
-    allows computers to protect users’ data even if the entire system falls under
-    the attacker’s control. While it was previously believed that SGX is resilient
-    to speculative execution attacks (such as <a href="https://meltdownattack.com/">Meltdown</a> and <a href="https://spectreattack.com/">Spectre</a>), Foreshadow
-    demonstrates how speculative execution can be exploited for reading the
-    contents of SGX-protected memory as well as extracting the machine’s private attestation key. Making things worse, due to SGX’s privacy features, an attestation report cannot be linked to the identity of its signer. Thus, it only takes a single compromised SGX machine to erode trust in the
-    entire SGX ecosystem.<br><br><br>
-    <p style = "text-align:center;"><a href="foreshadow.pdf" class="btn btn-default fs-btn mid-btn" role="button">
-            Read the Original Foreshadow Paper <i class="fa fa-download" aria-hidden="true"></i></a>
-			</p>
-            </p>
-        </div>
-        <div class="well">
-            <div class="page-header">
-                <h3 class="fs-title">Foreshadow - Next Generation (NG)</h2>
-            </div>
-            <p>
-            While investigating the vulnerability that causes Foreshadow, which
-            Intel refers to as "L1 Terminal Fault",
-            Intel identified two related
-            attacks, which we call Foreshadow-NG.
-                These attacks can potentially be used to read <b> any
-		</b> information residing in the L1 cache, including
-		information belonging to the System Management Mode (SMM), the 
-				<a href="https://en.wikipedia.org/wiki/Kernel_(operating_system)">Operating System's Kernel</a>, or <a href="https://en.wikipedia.org/wiki/Hypervisor">Hypervisor</a>. Perhaps most devastating, Foreshadow-NG might also be used to read information stored in other virtual machines running on the same third-party cloud, presenting a risk to cloud infrastructure. Finally, in some cases, Foreshadow-NG might bypass previous mitigations against speculative execution attacks, including countermeasures to <a href="https://meltdownattack.com/">Meltdown</a> and <a href="https://spectreattack.com/">Spectre</a>.
-            <p style = "text-align:center;"><a href="foreshadow-NG.pdf" class="btn btn-default fs-btn mid-btn" role="button">
-            Read the Foreshadow-NG Technical report <i class="fa fa-download" aria-hidden="true"></i></a>
-			</p>
-			</p>
-        </div>
-    </div>
+		<h3 class="fs-title">Foreshadow</h2>
+		<p>
+			At a high level, <a href="https://en.wikipedia.org/wiki/Software_Guard_Extensions">SGX</a>
+			is a new  feature in modern Intel CPUs which
+			allows computers to protect users’ data even if the entire system falls under
+			the attacker’s control. While it was previously believed that SGX is resilient
+			to speculative execution attacks (such as <a href="https://meltdownattack.com/">Meltdown</a> and <a href="https://spectreattack.com/">Spectre</a>), Foreshadow
+			demonstrates how speculative execution can be exploited for reading the
+			contents of SGX-protected memory as well as extracting the machine’s private attestation key.
+			Making things worse, due to SGX’s privacy features, an attestation report cannot be linked to the identity of its signer.
+			Thus, it only takes a single compromised SGX machine to erode trust in the
+			entire SGX ecosystem.
+		</p>
+
+		<p style = "text-align:center;"><a href="foreshadow.pdf" class="btn btn-default fs-btn mid-btn" role="button">
+	            Read the Original Foreshadow Paper <i class="fa fa-download" aria-hidden="true"></i></a>
+		</p>
+	</div>
+	<div class="well">
+		<h3 class="fs-title">Foreshadow - Next Generation (NG)</h2>
+		<p>
+	            	While investigating the vulnerability that causes Foreshadow, which
+	            	Intel refers to as "L1 Terminal Fault",
+	            	Intel identified two related
+	            	attacks, which we call Foreshadow-NG.
+			These attacks can potentially be used to read <b> any
+			</b> information residing in the L1 cache, including
+			information belonging to the System Management Mode (SMM), the 
+			<a href="https://en.wikipedia.org/wiki/Kernel_(operating_system)">Operating System's Kernel</a>, or <a href="https://en.wikipedia.org/wiki/Hypervisor">Hypervisor</a>. Perhaps most devastating, Foreshadow-NG might also be used to read information stored in other virtual machines running on the same third-party cloud, presenting a risk to cloud infrastructure. Finally, in some cases, Foreshadow-NG might bypass previous mitigations against speculative execution attacks, including countermeasures to <a href="https://meltdownattack.com/">Meltdown</a> and <a href="https://spectreattack.com/">Spectre</a>.
+		</p>
+            	<p style = "text-align:center;"><a href="foreshadow-NG.pdf" class="btn btn-default fs-btn mid-btn" role="button">
+    		Read the Foreshadow-NG Technical report <i class="fa fa-download" aria-hidden="true"></i></a>
+		</p>
+	</div>
+</div>
   
     <div id="demo" class="page-header">
         <h2 class="fs-title">Foreshadow in Action (Attacking SGX)</h2>
     </div>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/ynB1inl4G3c?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/8ZF6kX6z7pM?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe class = "youtubevid" width="560" height="315" src="https://www.youtube.com/embed/ynB1inl4G3c?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe class = "youtubevid" width="560" height="315" src="https://www.youtube.com/embed/8ZF6kX6z7pM?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 	<p class = "question">Who reported this vulnerability?</p>
     <p class = "answer">

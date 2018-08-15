@@ -72,10 +72,70 @@ pre {
 .double_col {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	grid-gap: 1em;
+	grid-gap: 0; 
+	grid-row-gap: 0;
+	grid-column-gap: 2em;
+}
+
+.double_col div:nth-of-type(1) {
+	order: 1;
+}
+.double_col div:nth-of-type(2) {
+	order: 3;
+}
+.double_col div:nth-of-type(3) {
+	order: 5;
+}
+.double_col div:nth-of-type(4) {
+	order: 2;
+}
+.double_col div:nth-of-type(5) {
+	order: 4;
+}
+.double_col div:nth-of-type(6) {
+	order: 6;
+}
+
+@media (max-width: 1000px) {
+	.double_col {
+		grid-template-columns: 1fr;
+	}
+
+	.double_col div:nth-of-type(1) {
+		order: 1;
+	}
+	.double_col div:nth-of-type(2) {
+		order: 2;
+	}
+	.double_col div:nth-of-type(3) {
+		order: 3;
+	}
+	.double_col div:nth-of-type(4) {
+		order: 4;
+	}
+	.double_col div:nth-of-type(5) {
+		order: 5;
+	}
+	.double_col div:nth-of-type(6) {
+		order: 6;
+	}
+}
+
+.double_col div {
+	text-align: justify;
 }
 
 .mid-btn {
 	background-color:#af2b03;
 	color:#f0f0f0;
+}
+
+.mywell {
+    background-color: #f0f0f0;
+     border: 1px solid #e3e3e3;
+     border-radius: 4px; 
+}
+
+.youtubevid {
+	max-width: 100%;
 }
