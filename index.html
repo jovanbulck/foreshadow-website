@@ -41,17 +41,16 @@ Out-of-Order Execution</h3>
     year = {2018},
     month = {August},
     publisher = {{USENIX} Association},
-    note={See also technical report Forshadow-NG~\cite{weisse2018forshadowNG} (\url{https://foreshadowattack.eu})}
-
+    note={See also technical report Foreshadow-NG~\cite{weisse2018foreshadowNG}}
 }
 
-@article{weisse2018forshadowNG,
+@article{weisse2018foreshadowNG,
   title={Foreshadow-NG: Breaking the Virtual Memory Abstraction with Transient Out-of-Order Execution},
   author={Weisse, Ofir and Van Bulck, Jo and Minkin, Marina and  Genkin, Daniel and Kasikci, Baris and
               Piessens, Frank and Silberstein, Mark and Strackx, Raoul and Wenisch, Thomas F. and Yarom, Yuval},
   journal={Technical report},
   year={2018},
-  note={See also USENIX Security paper Foreshadow~\cite{vanbulck2018foreshadow} (\url{https://foreshadowattack.eu})}
+  note={See also {USENIX} Security paper Foreshadow~\cite{vanbulck2018foreshadow}}
 }
 </pre>
     </div> 
@@ -91,11 +90,11 @@ Out-of-Order Execution</h3>
 	</div>
 	<div class ="mywell">
 		<p style = "text-align:center;"><a href="foreshadow.pdf" class="btn btn-default fs-btn mid-btn" role="button">
-	            USENIX Foreshadow paper <i class="fa fa-download" aria-hidden="true"></i></a>
+	            Read the USENIX paper <i class="fa fa-download" aria-hidden="true"></i></a>
 		</p>
 	</div>
 	<div class="mywell">
-		<h3 class="fs-title">Foreshadow - Next Generation (NG)</h2>
+		<h3 class="fs-title">Foreshadow &ndash; Next Generation (NG)</h2>
 	</div>
 	<div class="mywell">
 		<p>
@@ -106,12 +105,12 @@ Out-of-Order Execution</h3>
 			These attacks can potentially be used to read <b> any
 			</b> information residing in the L1 cache, including
 			information belonging to the System Management Mode (SMM), the 
-			<a href="https://en.wikipedia.org/wiki/Kernel_(operating_system)">Operating System's Kernel</a>, or <a href="https://en.wikipedia.org/wiki/Hypervisor">Hypervisor</a>. Perhaps most devastating, Foreshadow-NG might also be used to read information stored in other virtual machines running on the same third-party cloud, presenting a risk to cloud infrastructure. Finally, in some cases, Foreshadow-NG might bypass previous mitigations against speculative execution attacks, including countermeasures to <a href="https://meltdownattack.com/">Meltdown</a> and <a href="https://spectreattack.com/">Spectre</a>.
+			<a href="https://en.wikipedia.org/wiki/Kernel_(operating_system)">Operating System's Kernel</a>, or <a href="https://en.wikipedia.org/wiki/Hypervisor">Hypervisor</a>. Perhaps most devastating, Foreshadow-NG might also be used to read information stored in other virtual machines running on the same third-party cloud, presenting a risk to cloud infrastructure. Finally, in some cases, Foreshadow-NG might bypass previous mitigations against speculative execution attacks, including countermeasures for <a href="https://meltdownattack.com/">Meltdown</a> and <a href="https://spectreattack.com/">Spectre</a>.
 		</p>
 	</div>
 	<div class = mywell>
             	<p style = "text-align:center;"><a href="foreshadow-NG.pdf" class="btn btn-default fs-btn mid-btn" role="button">
-    		Foreshadow-NG technical report <i class="fa fa-download" aria-hidden="true"></i></a>
+    		Read the technical report <i class="fa fa-download" aria-hidden="true"></i></a>
 		</p>
 	</div>
 </div>
@@ -119,8 +118,14 @@ Out-of-Order Execution</h3>
     <div id="demo" class="page-header">
         <h2 class="fs-title">Foreshadow in Action (Attacking SGX)</h2>
     </div>
-    <iframe class = "youtubevid" width="560" height="315" src="https://www.youtube.com/embed/ynB1inl4G3c?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    <iframe class = "youtubevid" width="560" height="315" src="https://www.youtube.com/embed/8ZF6kX6z7pM?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <div style="text-align:center">
+        <iframe class = "youtubevid" width="560" height="315" src="https://www.youtube.com/embed/ynB1inl4G3c?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe class = "youtubevid" width="560" height="315" src="https://www.youtube.com/embed/8ZF6kX6z7pM?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+    <div class="page-header">
+        <h2 class="fs-title">Questions and Answers</h2>
+    </div>
 
 	<p class = "question">Who reported this vulnerability?</p>
     <p class = "answer">
@@ -150,26 +155,22 @@ Out-of-Order Execution</h3>
     </ul>
 
     <p>
-        <ul><li>The KU Leuven authors discovered the vulnerability, independently
+        The KU Leuven authors discovered the vulnerability, independently
         developed the attack, and first notified Intel on January 3, 2018.
         Their work was done independently from and concurrently to other recent
         x86 speculative execution vulnerabilities, notably Meltdown and
-        Spectre.</li><li>
+        Spectre.
+    </p>
+    <p>
         The authors from Technion, University of Michigan, the
         University of Adelaide and CSIRO's Data61 independently discovered and reported the
         vulnerability and associated attack to Intel during the embargo period on
-        January 23, 2018.</li></ul>
-    
+        January 23, 2018.
     <p> 
     Following our discovery of Foreshadow (CVE-2018-3615), Intel identified two closely related variants, <!-- which we call Foreshadow-NG (Next Generation, CVE-2018-3620 and CVE-2018-3646),  -->potentially affecting additional microprocessors, SMM code, Operating system and Hypervisor software.  We collectively refer to these Intel-discovered variants as Foreshadow-NG (Next Generation, CVE-2018-3620 and CVE-2018-3646), whereas Intel refers to this entire class of speculative execution side channel vulnerabilities  as “L1 Terminal Fault" (L1TF). More information on L1TF can be found <a href="https://software.intel.com/security-software-guidance/software-guidance/l1-terminal-fault">here</a>. 
     </p>
     
     </p>
-
-
-    <div class="page-header">
-        <h2 class="fs-title">Questions and Answers</h2>
-    </div>
 
     <p class = "question">
 	What technologies are affected by Foreshadow?
@@ -191,9 +192,11 @@ Out-of-Order Execution</h3>
   href="https://en.wikipedia.org/wiki/System_Management_Mode">System Management
 Mode (SMM)</a>, the 
 		<a href="https://en.wikipedia.org/wiki/Kernel_(operating_system)">Operating System's (OS) Kernel</a>, or other <a href="https://en.wikipedia.org/wiki/Virtual_machine"> Virtual Machines (VMs) </a> running on third-party clouds. More technically, Foreshadow-NG allows the following:
+    <ul>
 		<li>A user processes can potentially read kernel memory belonging to the OS.</li>
 		<li>A malicious guest VM (running on the cloud) can potentially read memory belonging to the VM's hypervisor or memory belonging to another guest VM running on the cloud.</li>
 		<li>A malicious OS to read memory protected by the SMM.</li>
+    </ul>
 	</p>
 
 		    <p class = "question">
@@ -203,9 +206,11 @@ Mode (SMM)</a>, the
     <i class="fa fa-chevron-right answer-chevron" aria-hidden="true"></i>
     For more information about how the attack works see our <a href="foreshadow.pdf">academic paper</a>.
 	<a href="https://www.intel.com/content/www/us/en/security-center/advisory/intel-sa-00161.html">Intel's security advisory</a> and <a href="https://software.intel.com/security-software-guidance/software-guidance/l1-terminal-fault">whitepaper</a>, describing Foreshadow as 'L1 Terminal Fault', are also available. The Foreshadow / L1-terminal-fault attack were assigned the following CVE numbers: 
+    <ul>
 	<li> CVE-2018-3615 for attacking SGX. </li>
 	<li> CVE-2018-3620 for attacking the OS Kernel and SMM mode.</li>
 	<li> CVE-2018-3646 for attacking virtual machines. </li>
+    </ul>
 	</p>
 	
 	<p class = "question">
@@ -315,6 +320,7 @@ Mode (SMM)</a>, the
 	The original Foreshadow attack affects most SGX-enabled Intel processors. As SGX is currently
     present only in Intel CPUs, we are unaware of Foreshadow affecting other CPU
     vendors. To the best of our understanding, Foreshadow-NG only affects Intel processors. However, we are still working to better understand the implications of Foreshadow-NG and this answer might change as the situation develops. 
+    </ul>
 	</p>
 	
     <p class = "question">
@@ -391,6 +397,7 @@ Mode (SMM)</a>, the
     Intel confirmed that Foreshadow affects all SGX-enabled Core processors
     (Skylake and Kaby Lake), while Atom family processors with SGX support
     remain unaffected. Intel confirmed that Foreshadow-NG affects the following processes: 
+    <ul>
 	<li>Intel Core™ i3/i5/i7/M processor (45nm and 32nm)</li>
 	<li>2nd/3rd/4th/5th/6th/7th/8th generation Intel Core processors</li>
 	<li>Intel Core X-series Processor Family for Intel X99 and X299 platforms</li>
@@ -400,6 +407,7 @@ Mode (SMM)</a>, the
 	<li>Intel® Xeon® Processor E7 v1/v2/v3/v4 Family</li>
 	<li>Intel® Xeon® Processor Scalable Family</li>
 	<li>Intel® Xeon® Processor D (1500, 2100)</li>
+    </ul>
 	</p>
 	<p>
 	See 
